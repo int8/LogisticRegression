@@ -31,16 +31,17 @@ function logistic_regression_learn(data::Array{Float64,2}, labels::Array{Float64
     J = Inf
     current_iter = 0
     alpha_step, epsilon, max_iter = params[:alpha], params[:eps], params[:max_iter]
-
+    J_values = zeros(0)
     while !convergence(omega, beta, data, labels, J, epsilon) && current_iter < max_iter
          J = goal_function(omega, beta, data, labels)
+		 append!(J_values, [J])
          omega, beta = update_params(omega, beta, data, labels, alpha_step)
          current_iter += 1		 
     end
 	
-	model_params = Dict();
+	model_params  = Dict();
 	model_params[:omega] = omega; model_params[:beta] = beta;	
-    return model_params
+    return model_params, J_values
 end
 
 function predict(data, model_params) 

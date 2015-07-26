@@ -77,25 +77,25 @@ function cross_validation(k, learn_method, dataset, labels, evaluation_metric)
   fold_indices[end] = fold_indices[end][end] < n? vcat(fold_indices[end],(fold_indices[end][end]+1):n) : fold_indices[end]
 
   f = learn_method[:learning_method] 
-  infer = learn_method[:inferencer]
+  predict = learn_method[:inferencer]
   params = learn_method[:params]
   
   predictions = zeros(n)
-  
+  goal_function_values = []
   for fold = fold_indices
       test_indices = shuffled_indices[fold]
       training_indices = filter(a -> !(a in test_indices), shuffled_indices)
       training_dataset = dataset[training_indices,:]
       training_labels = labels[training_indices]
       
-	  model_params = f(training_dataset, training_labels, params)
+	  model_params, goal_function_values = f(training_dataset, training_labels, params)
 	  
       test_dataset = dataset[test_indices ,:]    	  
-	  predictions[test_indices] = infer(test_dataset, model_params)[:]	  
+	  predictions[test_indices] = predict(test_dataset, model_params)[:]	  
 	  
   end
   
-  return predictions, evaluation_metric(labels, predictions)
+  return predictions, evaluation_metric(labels, predictions), goal_function_values
     
 end
 
