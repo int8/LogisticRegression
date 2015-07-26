@@ -1,5 +1,5 @@
 # LogisticRegression
-Julia implementation of Logistic Regression. It involves optimization of log-likelihood function using gradient descen method, basic evaluation metrics such as AUC has been implemented too. 
+Julia implementation of Logistic Regression. It involves optimization of log-likelihood function using gradient descent method, basic evaluation metrics such as AUC has been implemented too. 
 
 To run basic example try:
 
@@ -8,7 +8,7 @@ include("LogisticRegression.jl");
 include("Evaluation.jl");
 
 # Pkg.add("RDatasets") - install RDatasets if you haven't already 
-# Phg.add("Gadfly") - install gadfly for visualization purposes 
+# Pkg.add("Gadfly") - install gadfly for visualization purposes 
 using RDatasets
 using Gadfly
 
